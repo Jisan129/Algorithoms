@@ -1,18 +1,20 @@
 #include <iostream>
 #include <bits/stdc++.h>
-using namespace std;
+#include <wingdi.h>
 
+using namespace std;
+int fibo[1000]={-1};
 int findFibonacci(int number) {
-    int fibo[number+2];
-    fibo[0]=0;
-    fibo[1]=1;
-    if(number<2){
-        return number;
-    }
-    for(int i=2;i<=number;i++){
-        fibo[i]=fibo[i-1]+fibo[i-2];
-    }
-    return fibo[number];
+  if(number<2){
+      return number;
+  }
+  if(fibo[number]!=-1){
+      return fibo[number];
+  }
+  else {
+      fibo[number]=findFibonacci(number-2)+findFibonacci(number-1);
+      return fibo[number];
+  }
 
 }
 
