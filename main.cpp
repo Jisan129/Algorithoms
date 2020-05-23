@@ -12,7 +12,7 @@ long long countcoin(long long array[], long long number, long long x) {
     }
     for(long long i=0;i<number+1;i++){
         dp[0][i]=0;
-    }
+    dja;oa
     for(long long i=1;i<x+1;i++){
         for(long long j=1;j<=number;j++){
 
