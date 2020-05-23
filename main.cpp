@@ -7,13 +7,15 @@ using namespace std;
 long long countcoin(long long array[], long long number, long long x) {
 
     long long dp[x][number+1];
-    for(long long i=0;i<x;i++){
-        dp[i][0]=0;
+    for(long long i=0;i<x+1;i++){
+        dp[i][0]=1;
     }
-    for(long long i=0;i<x;i++){
+    for(long long i=0;i<number+1;i++){
+        dp[0][i]=0;
+    }
+    for(long long i=1;i<x+1;i++){
         for(long long j=1;j<=number;j++){
-            //cout<<array[i]<<" "<<j<<"No";
-            //cout<<dp[i][j-array[i]]<<" ";
+
             if(array[i]>j){
                 if(i!=0){
                     if(dp[i-1][j]==-1){
@@ -39,27 +41,27 @@ long long countcoin(long long array[], long long number, long long x) {
                 if(i!=0) {
                     //cout<<"Here";
                     long long excluding=dp[i-1][j];
-                    long long including=dp[i][j-array[i]]+1;
-                    if(excluding>including){
-                        dp[i][j]=excluding;
-                    } else{
+                    long long including=dp[i][j-array[i]];
+                    if(excluding!=-1){
+                        dp[i][j]=excluding+including;}
+                    else{
                         dp[i][j]=including;
                     }
 
                 } else{
-                    dp[i][j] = dp[i][j - array[i]] + 1;
+                    dp[i][j] = dp[i][j - array[i]];
                 }
             }
 
         }
         //cout<<endl;
     }
-    /*   for(long long i=0;i<x;i++){
-           for(long long j=0;j<=number;j++){
-               cout<<dp[i][j]<<" ";
-           }
-           cout<<endl;
-       }*/
+    /*for(long long i=0;i<x;i++){
+        for(long long j=0;j<=number;j++){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
+    }*/
     return dp[x-1][number];
 
 }
