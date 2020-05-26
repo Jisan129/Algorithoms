@@ -3,8 +3,8 @@
 using namespace std;
 
 
-void Merge(int Array[],int lower,int higher,int mid) {
-    int merge[100],k=lower,l=mid+1,i=lower;
+void Merge(long long  Array[],long long  lower,long long  higher,long long  mid) {
+   long long   merge[100],k=lower,l=mid+1,i=lower;
     //size<=size2? c=size:c=size2;
 
 
@@ -39,8 +39,8 @@ void Merge(int Array[],int lower,int higher,int mid) {
 
 
 
-void IMerge(int Array[],int size){
-    int p,l,h,mid,i;
+void IMerge(long long  Array[],long long  size){
+   long long   p,l,h,mid,i;
 
     for(p=2;p<=size;p=p*2){
         for(i=0;i+p-1<=size;i=i+p){
@@ -56,14 +56,43 @@ void IMerge(int Array[],int size){
     }
 
 }
+long long  Partition(long long  array[],long long  lower,long long  higher){
+   long long   i=lower,j=higher,pivot=array[lower];
 
+    do{
+        do{ i++;}while (pivot>=array[i]);
+            do{j--;}while(pivot<array[j]);
+
+            if(i<j){
+                swap(array[i],array[j]);
+            }
+    }
+    while (i<j);
+
+
+    swap(array[j],array[lower]);
+    return j;
+}
+void QuickSort(long long  array[],long long  lower,long long  size){
+   long long   j;
+          if(lower<size) {
+        j = Partition(array, lower, size);
+        QuickSort(array, lower, j);
+        QuickSort(array, j + 1, size);
+    }
+}
 int main(){
-    int array[]={11,13,7,12,16,9,24,5,10,3};
-   // int array2[]={2,4,6,8};
 
-    IMerge(array,10 );
+   long long   size;
+    cin>>size;
+   long long   array[size];
+    for(long long  i=0;i<size;i++){
+        cin>>array[i];
+    }
 
-    for(int i=0;i<10;i++){
+   QuickSort(array,0,size);
+
+    for(long long  i=0;i<size;i++){
         cout<<array[i]<<" ";
     }
 
