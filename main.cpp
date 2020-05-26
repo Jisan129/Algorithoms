@@ -1,78 +1,73 @@
-#include <iostream>
+//merge sort
 #include <bits/stdc++.h>
-
-
 using namespace std;
 
-long long countcoin(long long array[], long long number, long long x) {
 
-    long long dp[x][number+1];
-    for(long long i=0;i<x+1;i++){
-        dp[i][0]=1;
-    }
-    for(long long i=0;i<number+1;i++){
-        dp[0][i]=0;
-    dja;oa
-    for(long long i=1;i<x+1;i++){
-        for(long long j=1;j<=number;j++){
+void Merge(int Array[],int lower,int higher,int mid) {
+    int merge[100],k=lower,l=mid+1,i=lower;
+    //size<=size2? c=size:c=size2;
 
-            if(array[i]>j){
-                if(i!=0){
-                    if(dp[i-1][j]==-1){
-                        dp[i][j]=-1;}
-                    else{
-                        dp[i][j]=dp[i-1][j];
-                    }} else{
-                    dp[i][j]=-1;
-                }
-            }
-            else if (dp[i][j-array[i]]==-1){
-                if(i!=0){
-                    if(dp[i-1][j]==-1){
-                        dp[i][j]=-1;}
-                    else{
-                        dp[i][j]=dp[i-1][j];
-                    }}
-                else{
-                    dp[i][j]=-1;
-                }
-            }
-            else if(j>=array[i]&&dp[i][j-array[i]]!=-1){
-                if(i!=0) {
-                    //cout<<"Here";
-                    long long excluding=dp[i-1][j];
-                    long long including=dp[i][j-array[i]];
-                    if(excluding!=-1){
-                        dp[i][j]=excluding+including;}
-                    else{
-                        dp[i][j]=including;
-                    }
 
-                } else{
-                    dp[i][j] = dp[i][j - array[i]];
-                }
-            }
+    while(k<=mid && l<=higher){
+        if(Array[k]<Array[l]){
+            merge[i++]=Array[k++];
+
+
+        } else{
+            merge[i++]=Array[l++];
 
         }
-        //cout<<endl;
     }
-    /*for(long long i=0;i<x;i++){
-        for(long long j=0;j<=number;j++){
-            cout<<dp[i][j]<<" ";
+    // cout<<Array[k]<<i<<" "<<endl;
+
+    for(;k<=mid;k++){
+        merge[i++]=Array[k];
+
+    }
+    for(;l<=higher;l++){
+        merge[i++]=Array[l];
+
+    }
+
+    for(i=lower;i<=higher;i++){
+        //cout<<merge[i]<<" ";
+        Array[i]=merge[i];
+    }
+
+
+}
+
+
+
+void IMerge(int Array[],int size){
+    int p,l,h,mid,i;
+
+    for(p=2;p<=size;p=p*2){
+        for(i=0;i+p-1<=size;i=i+p){
+            l=i;
+            h=p+i-1;
+            mid=(l+h)/2;
+            Merge(Array,l,h,mid);
         }
-        cout<<endl;
-    }*/
-    return dp[x-1][number];
+
+    }
+    if(p/2<size){
+        Merge(Array,0,p/2-1,size);
+    }
 
 }
 
 int main(){
-    long long number,x;
-    cin>>number>>x;
-    long long array[number+1];
-    for(long long i=0;i<x;i++){
-        cin>>array[i];
+    int array[]={11,13,7,12,16,9,24,5,10,3};
+   // int array2[]={2,4,6,8};
+
+    IMerge(array,10 );
+
+    for(int i=0;i<10;i++){
+        cout<<array[i]<<" ";
     }
-    cout<<countcoin(array,number,x);
-    return 0;
+
+return 0;
+
 }
+
