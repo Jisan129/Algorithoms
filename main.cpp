@@ -1,102 +1,50 @@
-//merge sort
 #include <bits/stdc++.h>
+
 using namespace std;
+int adjecancyMatrix[1000][1000];
+int visited[1000];
 
+void bfs(int s, int n) {
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
 
-void Merge(long long  Array[],long long  lower,long long  higher,long long  mid) {
-   long long   merge[100],k=lower,l=mid+1,i=lower;
-    //size<=size2? c=size:c=size2;
+    queue<int> q;
+    q.push(s);
+    visited[s] = 1;
 
-
-    while(k<=mid && l<=higher){
-        if(Array[k]<Array[l]){
-            merge[i++]=Array[k++];
-
-
-        } else{
-            merge[i++]=Array[l++];
-
+    while (!q.empty()){
+        int node=q.front();
+        q.pop();
+        cout<<node<<" ";
+        for (int i = 0; i < 5; i++) {
+              if(adjecancyMatrix[node][i]!=0){
+                  if(visited[i]==0){
+                      visited[i]=1;
+                      q.push(i);
+                  }
+              }
         }
     }
-    // cout<<Array[k]<<i<<" "<<endl;
-
-    for(;k<=mid;k++){
-        merge[i++]=Array[k];
-
-    }
-    for(;l<=higher;l++){
-        merge[i++]=Array[l];
-
-    }
-
-    for(i=lower;i<=higher;i++){
-        //cout<<merge[i]<<" ";
-        Array[i]=merge[i];
-    }
-
 
 }
 
+                                                /* 0    0    1     4
 
+                                                   0    0    0     0
 
-void IMerge(long long  Array[],long long  size){
-   long long   p,l,h,mid,i;
+                                                   0    0    0     1
 
-    for(p=2;p<=size;p=p*2){
-        for(i=0;i+p-1<=size;i=i+p){
-            l=i;
-            h=p+i-1;
-            mid=(l+h)/2;
-            Merge(Array,l,h,mid);
-        }
+                                                   0    2    0     0*/
 
-    }
-    if(p/2<size){
-        Merge(Array,0,p/2-1,size);
-    }
+int main() {
+    int n, s;
+    //cin >> n >> s;
+    adjecancyMatrix[1][4]=1;
+    adjecancyMatrix[1][3]=1;
+    adjecancyMatrix[4][2]=1;
+    adjecancyMatrix[3][4]=1;
+    
 
+    bfs(1,5);
 }
-long long  Partition(long long  array[],long long  lower,long long  higher){
-   long long   i=lower,j=higher,pivot=array[lower];
-
-    do{
-        do{ i++;}while (pivot>=array[i]);
-            do{j--;}while(pivot<array[j]);
-
-            if(i<j){
-                swap(array[i],array[j]);
-            }
-    }
-    while (i<j);
-
-
-    swap(array[j],array[lower]);
-    return j;
-}
-void QuickSort(long long  array[],long long  lower,long long  size){
-   long long   j;
-          if(lower<size) {
-        j = Partition(array, lower, size);
-        QuickSort(array, lower, j);
-        QuickSort(array, j + 1, size);
-    }
-}
-int main(){
-
-   long long   size;
-    cin>>size;
-   long long   array[size];
-    for(long long  i=0;i<size;i++){
-        cin>>array[i];
-    }
-
-   QuickSort(array,0,size);
-
-    for(long long  i=0;i<size;i++){
-        cout<<array[i]<<" ";
-    }
-
-return 0;
-
-}
-
